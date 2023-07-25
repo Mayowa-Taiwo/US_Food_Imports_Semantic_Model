@@ -3,6 +3,481 @@
   "compatibilityLevel": 1500,
   "model": {
     "culture": "en-US",
+    "dataSources": [
+      {
+        "type": "structured",
+        "name": "File/C:\\Users\\HP\\Documents\\Alltables_Rev 1 xlsm",
+        "connectionDetails": {
+          "protocol": "file",
+          "address": {
+            "path": "C:\\Users\\HP\\Downloads\\New folder (2)\\Alltables_Rev.2.xlsm"
+          },
+          "authentication": null,
+          "query": null
+        },
+        "options": {},
+        "credential": {
+          "AuthenticationKind": "ServiceAccount"
+        },
+        "contextExpression": [
+          "let",
+          "    #\"0001\" = Excel.Workbook(..., null, true)",
+          "in",
+          "    #\"0001\""
+        ]
+      }
+    ],
+    "tables": [
+      {
+        "name": "Dim_CountryOfImport",
+        "columns": [
+          {
+            "name": "ImportCountryID",
+            "dataType": "int64",
+            "isHidden": true,
+            "sourceColumn": "ImportCountryID"
+          },
+          {
+            "name": "Country of Import",
+            "dataType": "string",
+            "sourceColumn": "Country of Import"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Partition",
+            "dataView": "full",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Source = #\"File/C:\\Users\\HP\\Documents\\Alltables_Rev 1 xlsm\",",
+                "    Dim_CountryOfImport_Sheet = Source{[Item=\"Dim_CountryOfImport\",Kind=\"Sheet\"]}[Data],",
+                "    #\"Promoted Headers\" = Table.PromoteHeaders(Dim_CountryOfImport_Sheet, [PromoteAllScalars=true]),",
+                "    #\"Changed Type\" = Table.TransformColumnTypes(#\"Promoted Headers\",{{\"ImportCountryID\", Int64.Type}, {\"Country of Import\", type text}})",
+                "in",
+                "    #\"Changed Type\""
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "Dim_FoodCategory",
+        "columns": [
+          {
+            "name": "FoodCategoryID",
+            "dataType": "int64",
+            "isHidden": true,
+            "sourceColumn": "FoodCategoryID"
+          },
+          {
+            "name": "FoodCategory",
+            "dataType": "string",
+            "sourceColumn": "FoodCategory"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Partition",
+            "dataView": "full",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Source = #\"File/C:\\Users\\HP\\Documents\\Alltables_Rev 1 xlsm\",",
+                "    Dim_FoodCategory_Sheet = Source{[Item=\"Dim_FoodCategory\",Kind=\"Sheet\"]}[Data],",
+                "    #\"Promoted Headers\" = Table.PromoteHeaders(Dim_FoodCategory_Sheet, [PromoteAllScalars=true]),",
+                "    #\"Changed Type\" = Table.TransformColumnTypes(#\"Promoted Headers\",{{\"FoodCategoryID\", Int64.Type}, {\"FoodCategory\", type text}})",
+                "in",
+                "    #\"Changed Type\""
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "Dim_FoodSubcategory",
+        "columns": [
+          {
+            "name": "FoodSubCategoryID",
+            "dataType": "int64",
+            "isHidden": true,
+            "sourceColumn": "FoodSubCategoryID"
+          },
+          {
+            "name": "Food_SubCategory",
+            "dataType": "string",
+            "sourceColumn": "Food_SubCategory"
+          },
+          {
+            "name": "FoodCategoryID",
+            "dataType": "int64",
+            "isHidden": true,
+            "sourceColumn": "FoodCategoryID"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Partition",
+            "dataView": "full",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Source = #\"File/C:\\Users\\HP\\Documents\\Alltables_Rev 1 xlsm\",",
+                "    Dim_FoodSubcategory_Sheet = Source{[Item=\"Dim_FoodSubcategory\",Kind=\"Sheet\"]}[Data],",
+                "    #\"Promoted Headers\" = Table.PromoteHeaders(Dim_FoodSubcategory_Sheet, [PromoteAllScalars=true]),",
+                "    #\"Changed Type\" = Table.TransformColumnTypes(#\"Promoted Headers\",{{\"FoodSubCategoryID\", Int64.Type}, {\"Food_SubCategory\", type text}, {\"FoodCategoryID\", Int64.Type}})",
+                "in",
+                "    #\"Changed Type\""
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "Dim_UOM",
+        "columns": [
+          {
+            "name": "UOMID",
+            "dataType": "int64",
+            "sourceColumn": "UOMID"
+          },
+          {
+            "name": "UOM",
+            "dataType": "string",
+            "sourceColumn": "UOM"
+          },
+          {
+            "name": "Description",
+            "dataType": "string",
+            "sourceColumn": "Description"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Partition",
+            "dataView": "full",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Source = #\"File/C:\\Users\\HP\\Documents\\Alltables_Rev 1 xlsm\",",
+                "    Dim_UOM_Sheet = Source{[Item=\"Dim_UOM\",Kind=\"Sheet\"]}[Data],",
+                "    #\"Promoted Headers\" = Table.PromoteHeaders(Dim_UOM_Sheet, [PromoteAllScalars=true]),",
+                "    #\"Changed Type\" = Table.TransformColumnTypes(#\"Promoted Headers\",{{\"UOMID\", Int64.Type}, {\"UOM\", type text}, {\"Description\", type text}})",
+                "in",
+                "    #\"Changed Type\""
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "Fact_FoodImports",
+        "columns": [
+          {
+            "name": "FoodImportSubcategory",
+            "dataType": "string",
+            "isHidden": true,
+            "sourceColumn": "FoodImportSubcategory"
+          },
+          {
+            "name": "Country of Import",
+            "dataType": "string",
+            "isHidden": true,
+            "sourceColumn": "Country of Import"
+          },
+          {
+            "name": "UOM",
+            "dataType": "string",
+            "isHidden": true,
+            "sourceColumn": "UOM"
+          },
+          {
+            "name": "Date",
+            "dataType": "dateTime",
+            "isHidden": true,
+            "sourceColumn": "Date"
+          },
+          {
+            "name": "Value of FoodImports",
+            "dataType": "double",
+            "sourceColumn": "Food_Import_Value"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Partition",
+            "dataView": "full",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Source = #\"File/C:\\Users\\HP\\Documents\\Alltables_Rev 1 xlsm\",",
+                "    Fact_FoodImports_Sheet = Source{[Item=\"Fact_FoodImports\",Kind=\"Sheet\"]}[Data],",
+                "    #\"Changed Type\" = Table.TransformColumnTypes(Fact_FoodImports_Sheet,{{\"Column1\", type text}, {\"Column2\", type text}, {\"Column3\", type text}, {\"Column4\", type number}, {\"Column5\", type number}, {\"Column6\", type number}, {\"Column7\", type number}, {\"Column8\", type number}, {\"Column9\", type number}, {\"Column10\", type number}, {\"Column11\", type number}, {\"Column12\", type number}, {\"Column13\", type number}, {\"Column14\", type number}, {\"Column15\", type number}, {\"Column16\", type number}, {\"Column17\", type number}, {\"Column18\", type number}, {\"Column19\", type number}, {\"Column20\", type number}, {\"Column21\", type number}, {\"Column22\", type number}, {\"Column23\", type number}, {\"Column24\", type number}, {\"Column25\", type number}, {\"Column26\", type number}}),",
+                "    #\"Promoted Headers\" = Table.PromoteHeaders(#\"Changed Type\", [PromoteAllScalars=true]),",
+                "    #\"Changed Type1\" = Table.TransformColumnTypes(#\"Promoted Headers\",{{\"FoodImportSubcategory\", type text}, {\"Country of Import\", type text}, {\"UOM\", type text}, {\"2021\", type number}, {\"2020\", type number}, {\"2019\", type number}, {\"2018\", type number}, {\"2017\", type number}, {\"2016\", type number}, {\"2015\", type number}, {\"2014\", type number}, {\"2013\", type number}, {\"2012\", type number}, {\"2011\", type number}, {\"2010\", type number}, {\"2009\", type number}, {\"2008\", type number}, {\"2007\", type number}, {\"2006\", type number}, {\"2005\", type number}, {\"2004\", type number}, {\"2003\", type number}, {\"2002\", type number}, {\"2001\", type number}, {\"2000\", type number}, {\"1999\", type number}}),",
+                "    #\"Unpivoted Other Columns\" = Table.UnpivotOtherColumns(#\"Changed Type1\", {\"FoodImportSubcategory\", \"Country of Import\", \"UOM\"}, \"Attribute\", \"Value\"),",
+                "    #\"Changed Type2\" = Table.TransformColumnTypes(#\"Unpivoted Other Columns\",{{\"Attribute\", type date}}),",
+                "    #\"Renamed Columns\" = Table.RenameColumns(#\"Changed Type2\",{{\"Attribute\", \"Date\"}, {\"Value\", \"Food_Import_Value\"}})",
+                "in",
+                "    #\"Renamed Columns\""
+              ]
+            }
+          }
+        ],
+        "measures": [
+          {
+            "name": "Total Food Imports",
+            "expression": "sum(Fact_FoodImports[Value of FoodImports])"
+          },
+          {
+            "name": "World Food Import",
+            "expression": "CALCULATE('Fact_FoodImports'[Total Food Imports],'Fact_FoodImports'[Country of Import] = \"World\",'Fact_FoodImports'[UOM] = \"Million $\")"
+          },
+          {
+            "name": "Rest of World Food Import",
+            "expression": "CALCULATE('Fact_FoodImports'[Total Food Imports],'Fact_FoodImports'[Country of Import] = \"Rest of World\",'Fact_FoodImports'[UOM] = \"Million $\")"
+          },
+          {
+            "name": "US Food Imports",
+            "expression": "'Fact_FoodImports'[World Food Import] - 'Fact_FoodImports'[Rest of World Food Import]"
+          },
+          {
+            "name": "Quantity of Livestock Imported WorldWide",
+            "expression": "CALCULATE([Total Food Imports],'Fact_FoodImports'[Country of Import] = \"World\",'Fact_FoodImports'[UOM] = \"1,000\")"
+          },
+          {
+            "name": "Quantity of Food Imported (ltrpf)",
+            "expression": "CALCULATE([Total Food Imports],'Fact_FoodImports'[Country of Import] = \"World\",'Fact_FoodImports'[UOM] = \"1,000 litpf\")"
+          },
+          {
+            "name": "Quantity of Food Imported (MT)",
+            "expression": "CALCULATE([Total Food Imports],'Fact_FoodImports'[Country of Import] = \"World\",'Fact_FoodImports'[UOM] = \"1,000 mt\")"
+          }
+        ]
+      },
+      {
+        "name": "Fact_Price&Quantity",
+        "columns": [
+          {
+            "name": "FoodCategory",
+            "dataType": "string",
+            "isHidden": true,
+            "sourceColumn": "FoodCategory"
+          },
+          {
+            "name": "UOM",
+            "dataType": "string",
+            "isHidden": true,
+            "sourceColumn": "UOM"
+          },
+          {
+            "name": "Date",
+            "dataType": "dateTime",
+            "isHidden": true,
+            "sourceColumn": "Date"
+          },
+          {
+            "name": "Value of Price and Quantity",
+            "dataType": "double",
+            "sourceColumn": "Food_Import_Price"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Partition",
+            "dataView": "full",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Source = #\"File/C:\\Users\\HP\\Documents\\Alltables_Rev 1 xlsm\",",
+                "    #\"Fact_Price&Quantity_Sheet\" = Source{[Item=\"Fact_Price&Quantity\",Kind=\"Sheet\"]}[Data],",
+                "    #\"Changed Type\" = Table.TransformColumnTypes(#\"Fact_Price&Quantity_Sheet\",{{\"Column1\", type text}, {\"Column2\", type text}, {\"Column3\", type number}, {\"Column4\", type number}, {\"Column5\", type number}, {\"Column6\", type number}, {\"Column7\", type number}, {\"Column8\", type number}, {\"Column9\", type number}, {\"Column10\", type number}, {\"Column11\", type number}, {\"Column12\", type number}, {\"Column13\", type number}, {\"Column14\", type number}, {\"Column15\", type number}, {\"Column16\", type number}, {\"Column17\", type number}, {\"Column18\", type number}, {\"Column19\", type number}, {\"Column20\", type number}, {\"Column21\", type number}, {\"Column22\", type number}, {\"Column23\", type number}, {\"Column24\", type number}, {\"Column25\", type number}}),",
+                "    #\"Promoted Headers\" = Table.PromoteHeaders(#\"Changed Type\", [PromoteAllScalars=true]),",
+                "    #\"Changed Type1\" = Table.TransformColumnTypes(#\"Promoted Headers\",{{\"FoodCategory\", type text}, {\"UOM\", type text}, {\"2021\", type number}, {\"2020\", type number}, {\"2019\", type number}, {\"2018\", type number}, {\"2017\", type number}, {\"2016\", type number}, {\"2015\", type number}, {\"2014\", type number}, {\"2013\", type number}, {\"2012\", type number}, {\"2011\", type number}, {\"2010\", type number}, {\"2009\", type number}, {\"2008\", type number}, {\"2007\", type number}, {\"2006\", type number}, {\"2005\", type number}, {\"2004\", type number}, {\"2003\", type number}, {\"2002\", type number}, {\"2001\", type number}, {\"2000\", type number}, {\"1999\", type number}}),",
+                "    #\"Unpivoted Other Columns\" = Table.UnpivotOtherColumns(#\"Changed Type1\", {\"FoodCategory\", \"UOM\"}, \"Attribute\", \"Value\"),",
+                "    #\"Changed Type2\" = Table.TransformColumnTypes(#\"Unpivoted Other Columns\",{{\"Attribute\", type date}}),",
+                "    #\"Renamed Columns\" = Table.RenameColumns(#\"Changed Type2\",{{\"Attribute\", \"Date\"}, {\"Value\", \"Food_Import_Price\"}})",
+                "in",
+                "    #\"Renamed Columns\""
+              ]
+            }
+          }
+        ],
+        "measures": [
+          {
+            "name": "TotalValue",
+            "expression": "sum('Fact_Price&Quantity'[Value of Price and Quantity])"
+          },
+          {
+            "name": "Total Quantity (Metric Tonnes)",
+            "expression": "CALCULATE('Fact_Price&Quantity'[TotalValue],'Fact_Price&Quantity'[UOM] = \"1,000 mt\")"
+          },
+          {
+            "name": "Total Quantity (Litres per foot)",
+            "expression": "CALCULATE('Fact_Price&Quantity'[TotalValue],'Fact_Price&Quantity'[UOM] = \"1,000 litpf\")"
+          },
+          {
+            "name": "Total Quantity Per 1000 Units)",
+            "expression": "CALCULATE('Fact_Price&Quantity'[TotalValue],'Fact_Price&Quantity'[UOM] = \"1,000\")"
+          },
+          {
+            "name": "Total Price (Metric Tonnes)",
+            "expression": " CALCULATE('Fact_Price&Quantity'[TotalValue],'Fact_Price&Quantity'[UOM] = \"Dollars per mt\")"
+          },
+          {
+            "name": "Total Price (KL)",
+            "expression": "  CALCULATE('Fact_Price&Quantity'[TotalValue],'Fact_Price&Quantity'[UOM] = \"Dollars per KL\")"
+          },
+          {
+            "name": "Total Quantity (Per Unit)",
+            "expression": "CALCULATE('Fact_Price&Quantity'[TotalValue],'Fact_Price&Quantity'[UOM] = \"Dollars\")"
+          },
+          {
+            "name": "Price Per Quantity",
+            "expression": "Divide('Fact_Price&Quantity'[Total Price (Metric Tonnes)],'Fact_Price&Quantity'[Total Quantity (Metric Tonnes)])"
+          },
+          {
+            "name": "Price per KL",
+            "expression": "DIVIDE('Fact_Price&Quantity'[Total Price (KL)],'Fact_Price&Quantity'[Total Quantity (Litres per foot)])"
+          }
+        ]
+      },
+      {
+        "name": "Date",
+        "dataCategory": "Time",
+        "columns": [
+          {
+            "type": "calculatedTableColumn",
+            "name": "Date",
+            "dataType": "dateTime",
+            "isNameInferred": true,
+            "isDataTypeInferred": true,
+            "isKey": true,
+            "sourceColumn": "[Date]"
+          },
+          {
+            "type": "calculated",
+            "name": "Year",
+            "dataType": "int64",
+            "isDataTypeInferred": true,
+            "isHidden": true,
+            "expression": "YEAR('Date'[Date])"
+          },
+          {
+            "type": "calculated",
+            "name": "FiscalQuarter",
+            "dataType": "string",
+            "isDataTypeInferred": true,
+            "isHidden": true,
+            "expression": "\"Q\" & QUARTER('Date'[Date])"
+          },
+          {
+            "type": "calculated",
+            "name": "Month",
+            "dataType": "string",
+            "isDataTypeInferred": true,
+            "isHidden": true,
+            "expression": "FORMAT('Date'[Date],\"MMMM\")"
+          },
+          {
+            "type": "calculated",
+            "name": "MonthNo",
+            "dataType": "int64",
+            "isDataTypeInferred": true,
+            "isHidden": true,
+            "expression": "MONTH('Date'[Date])"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "CalculatedTable 1",
+            "source": {
+              "type": "calculated",
+              "expression": "CALENDARAUTO()"
+            }
+          }
+        ],
+        "hierarchies": [
+          {
+            "name": "FiscalYear",
+            "levels": [
+              {
+                "name": "Year",
+                "ordinal": 0,
+                "column": "Year"
+              },
+              {
+                "name": "Quarter",
+                "ordinal": 1,
+                "column": "FiscalQuarter"
+              },
+              {
+                "name": "Month",
+                "ordinal": 2,
+                "column": "Month"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "relationships": [
+      {
+        "name": "21b7b5c6-78e6-4cd2-92af-c2e74a1844e9",
+        "fromTable": "Fact_FoodImports",
+        "fromColumn": "Country of Import",
+        "toTable": "Dim_CountryOfImport",
+        "toColumn": "Country of Import"
+      },
+      {
+        "name": "3c4cf8f7-2a1f-4247-8647-6c0420524210",
+        "fromTable": "Fact_FoodImports",
+        "fromColumn": "UOM",
+        "toTable": "Dim_UOM",
+        "toColumn": "UOM"
+      },
+      {
+        "name": "57baf3a6-3466-4177-b2a9-6ddd615a9efa",
+        "fromTable": "Fact_Price&Quantity",
+        "fromColumn": "FoodCategory",
+        "toTable": "Dim_FoodCategory",
+        "toColumn": "FoodCategory"
+      },
+      {
+        "name": "c86cc5c1-a7da-48ab-84ab-0ef59cd7e664",
+        "fromTable": "Fact_Price&Quantity",
+        "fromColumn": "UOM",
+        "toTable": "Dim_UOM",
+        "toColumn": "UOM"
+      },
+      {
+        "name": "d44d6a16-a194-438a-9b28-f29e7efea5ff",
+        "fromTable": "Fact_FoodImports",
+        "fromColumn": "Country of Import",
+        "toTable": "Dim_FoodSubcategory",
+        "toColumn": "Food_SubCategory"
+      },
+      {
+        "name": "996d2402-e842-424b-9ff1-57b537f8dead",
+        "fromTable": "Fact_FoodImports",
+        "fromColumn": "Date",
+        "toTable": "Date",
+        "toColumn": "Date"
+      },
+      {
+        "name": "2eddfcdd-73b4-4a9a-ae68-d7d00bb17eb9",
+        "fromTable": "Fact_Price&Quantity",
+        "fromColumn": "Date",
+        "toTable": "Date",
+        "toColumn": "Date"
+      }
+    ],
     "annotations": [
       {
         "name": "ClientCompatibilityLevel",
