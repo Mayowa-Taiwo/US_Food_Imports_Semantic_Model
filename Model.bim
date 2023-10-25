@@ -15,7 +15,6 @@
           "authentication": null,
           "query": null
         },
-        "options": {},
         "credential": {
           "AuthenticationKind": "ServiceAccount"
         },
@@ -476,6 +475,215 @@
         "fromColumn": "Date",
         "toTable": "Date",
         "toColumn": "Date"
+      }
+    ],
+    "perspectives": [
+      {
+        "name": "Food Import by Country",
+        "tables": [
+          {
+            "name": "Dim_CountryOfImport",
+            "columns": [
+              {
+                "name": "Country of Import"
+              },
+              {
+                "name": "ImportCountryID"
+              }
+            ]
+          },
+          {
+            "name": "Dim_UOM",
+            "columns": [
+              {
+                "name": "Description"
+              },
+              {
+                "name": "UOM"
+              },
+              {
+                "name": "UOMID"
+              }
+            ]
+          },
+          {
+            "name": "Fact_FoodImports",
+            "columns": [
+              {
+                "name": "Value of FoodImports"
+              }
+            ],
+            "measures": [
+              {
+                "name": "Quantity of Food Imported (ltrpf)"
+              },
+              {
+                "name": "Quantity of Food Imported (MT)"
+              },
+              {
+                "name": "Quantity of Livestock Imported WorldWide"
+              },
+              {
+                "name": "US Food Imports"
+              },
+              {
+                "name": "World Food Import"
+              },
+              {
+                "name": "Total Food Imports"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Food price and Quantity by country",
+        "tables": [
+          {
+            "name": "Dim_CountryOfImport",
+            "columns": [
+              {
+                "name": "Country of Import"
+              },
+              {
+                "name": "ImportCountryID"
+              }
+            ]
+          },
+          {
+            "name": "Dim_UOM",
+            "columns": [
+              {
+                "name": "Description"
+              },
+              {
+                "name": "UOM"
+              },
+              {
+                "name": "UOMID"
+              }
+            ]
+          },
+          {
+            "name": "Fact_Price&Quantity",
+            "columns": [
+              {
+                "name": "Value of Price and Quantity"
+              }
+            ],
+            "measures": [
+              {
+                "name": "Price per KL"
+              },
+              {
+                "name": "Price Per Quantity"
+              },
+              {
+                "name": "Total Price (KL)"
+              },
+              {
+                "name": "Total Price (Metric Tonnes)"
+              },
+              {
+                "name": "Total Quantity (Litres per foot)"
+              },
+              {
+                "name": "Total Quantity (Metric Tonnes)"
+              },
+              {
+                "name": "Total Quantity (Per Unit)"
+              },
+              {
+                "name": "Total Quantity Per 1000 Units)"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Food Category by Country",
+        "tables": [
+          {
+            "name": "Dim_CountryOfImport",
+            "columns": [
+              {
+                "name": "Country of Import"
+              },
+              {
+                "name": "ImportCountryID"
+              }
+            ]
+          },
+          {
+            "name": "Fact_FoodImports",
+            "measures": [
+              {
+                "name": "Quantity of Food Imported (MT)"
+              },
+              {
+                "name": "Quantity of Food Imported (ltrpf)"
+              },
+              {
+                "name": "Quantity of Livestock Imported WorldWide"
+              },
+              {
+                "name": "Total Food Imports"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Value of Food imports by year",
+        "tables": [
+          {
+            "name": "Date",
+            "columns": [
+              {
+                "name": "Date"
+              },
+              {
+                "name": "FiscalQuarter"
+              },
+              {
+                "name": "Month"
+              },
+              {
+                "name": "MonthNo"
+              },
+              {
+                "name": "Year"
+              }
+            ],
+            "hierarchies": [
+              {
+                "name": "FiscalYear"
+              }
+            ]
+          },
+          {
+            "name": "Fact_FoodImports",
+            "columns": [
+              {
+                "name": "Value of FoodImports"
+              }
+            ],
+            "measures": [
+              {
+                "name": "Quantity of Food Imported (ltrpf)"
+              },
+              {
+                "name": "Quantity of Food Imported (MT)"
+              },
+              {
+                "name": "Quantity of Livestock Imported WorldWide"
+              },
+              {
+                "name": "Total Food Imports"
+              }
+            ]
+          }
+        ]
       }
     ],
     "annotations": [
